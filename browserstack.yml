@@ -1,0 +1,18 @@
+userName: adityachauhan_yNLzMO
+accessKey: izTHyWoxsDgVDfdcA4ib
+platforms:
+  - os: OS X
+    osVersion: Monterey
+    browserName: Safari
+    browserVersion: 15.6
+  - os: Windows
+    osVersion: 11
+    browserName: Chrome
+    browserVersion: latest
+  - os: Windows
+    osVersion: 10
+    browserName: Chrome
+    browserVersion: 125.0
+browserstackLocal: true
+buildName: browserstack-build-1
+projectName: BrowserStack Sample
