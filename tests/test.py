@@ -26,6 +26,38 @@ driver.maximize_window()
 url = "https://elpais.com"
 driver.get(url)
 
+def ensure_language_is_spanish():
+    try:
+       
+        html_tag = WebDriverWait(driver, 5).until(
+            EC.presence_of_element_located((By.XPATH, "/html"))
+        )
+        lang_attribute = html_tag.get_attribute("lang")
+
+        
+        if lang_attribute and lang_attribute.lower().startswith("es"):
+            logging.info("The website's text is already displayed in Spanish.")
+        else:
+            logging.warning(f"Current language is '{lang_attribute}'. Attempting to switch to Spanish...")
+
+            
+            if "lang=" not in driver.current_url:
+                new_url = f"{driver.current_url}?lang=es"
+            else:
+                
+                new_url = re.sub(r"(lang=)[a-zA-Z]+", r"\1es", driver.current_url)
+
+            driver.get(new_url)
+
+            
+            html_tag = driver.find_element(By.XPATH, "/html")
+            lang_attribute = html_tag.get_attribute("lang")
+            if lang_attribute and lang_attribute.lower().startswith("es"):
+                logging.info("The website's text is now displayed in Spanish.")
+            else:
+                logging.error("Failed to switch the website language to Spanish.")
+    except Exception as e:
+        logging.error(f"Error verifying or switching the website language: {e}")
 
 def handle_popups():
     try:
@@ -58,6 +90,8 @@ def remove_obstructions():
         logging.info("Removed blocking iframes.")
     except Exception as e:
         logging.info("No blocking iframes found.")
+
+
 
 
 def navigate_to_opinion():
